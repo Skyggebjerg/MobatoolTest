@@ -10,14 +10,17 @@
  */
 #include <MobaTools.h>
 // Stepper connections - Please adapt to your own needs.
-const byte stepPin = 2;
-const byte dirPin = 3;
+int en_pin = 22; // enable pin
+const byte stepPin = 19;
+const byte dirPin = 23;
 
 const int stepsPerRev = 200;    // Steps per revolution - may need to be adjusted
 
 MoToStepper stepper1( stepsPerRev, STEPDIR );  // create a stepper instance
 
 void setup() {
+  pinMode(en_pin, OUTPUT);
+  digitalWrite(en_pin, LOW); // enable driver
   stepper1.attach( stepPin, dirPin );
   stepper1.setSpeed( 300 );              // 30 rev/min (if stepsPerRev is set correctly)
   stepper1.setRampLen( stepsPerRev / 2); // Ramp length is 1/2 revolution
